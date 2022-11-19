@@ -55,7 +55,7 @@ class ServerStatus
       redis: {
         up: redis_up?,
         info: redis_info,
-      }
+      },
     }
   end
 
@@ -210,6 +210,8 @@ class ServerStatus
     def redis_info
       return {} if Rails.cache.try(:redis).nil?
       Rails.cache.redis.with(&:info)
+    rescue Redis::CannotConnectError
+      {}
     end
 
     def redis_used_memory
