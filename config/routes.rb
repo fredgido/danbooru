@@ -14,9 +14,7 @@ Rails.application.routes.draw do
 
   resources :autocomplete, only: [:index]
 
-  # XXX This comes *after* defining posts above because otherwise the paginator
-  # generates `/?page=2` instead of `/posts?page=2` on the posts#index page.
-  root "posts#index"
+  root "home#index"
 
   namespace :admin do
     resources :users, :only => [:edit, :update]

@@ -1,0 +1,64 @@
+<%= tag.meta name: "autocomplete-tag-prefixes", content: AutocompleteService::TAG_PREFIXES.to_json %>
+
+<div id="c-home">
+  <div id="a-index">
+    <div id="banner">
+      <% if CurrentUser.safe_mode? %>
+        <%= link_to image_pack_tag("static/konachan-banner-g.png"), posts_path %>
+      <% else %>
+        <%= link_to image_pack_tag("static/konachan-banner-r18.png"), posts_path %>
+      <% end %>
+    </div>
+
+    <div id="content">
+      <menu id="nav-links">
+        <%= nav_link_to "Posts", posts_path, title: "A paginated list of every post" %>
+        <%= nav_link_to "Comments", comments_path, title: "A paginated list of every comment" %>
+        <%= nav_link_to "Tags", tags_path, title: "A paginated list of every tag" %>
+        <%= nav_link_to "Wiki", wiki_pages_path, title: "Wiki" %>
+        <%= li_link_to "»", site_map_path, title: "Site map", id: "subnav-more-link" %>
+      </menu>
+    </div>
+
+    <div id="search">
+        <%= form_tag(posts_path, method: "get", id: "search-box-form", class: "flex") do %>
+          <% if current_page?(action: "index") %>
+            <% if params[:random] %>
+              <%= hidden_field_tag :random, params[:random] %>
+            <% end %>
+
+            <% if params[:show_votes] %>
+              <%= hidden_field_tag :show_votes, params[:show_votes] %>
+            <% end %>
+
+            <% if params[:size] %>
+              <%= hidden_field_tag :size, params[:size] %>
+            <% end %>
+          <% end %>
+
+          <%= text_field_tag("tags", "", id: "tags", class: "flex-auto", "data-shortcut": "q", "data-autocomplete": "tag-query", "autocapitalize": "none") %>
+          <%= hidden_field_tag :z, 6 %>
+
+          <button id="search-box-submit" type="submit"><%= search_icon %></button>
+        <% end %>
+    </div>
+
+    <div id="catgirl-counter">
+      <%= catgirl_counter_for(@count) %>
+    </div>
+
+    <footer>
+      <span id="contact">
+        <%= link_to "Contact", contact_path %>
+      </span>
+      —
+      <span id="post-count">
+        Serving <%= number_with_delimiter(@count) %> posts
+      </span>
+      —
+      <span id="danbooru-version">
+        Running Danbooru <%= link_to Rails.application.config.x.git_hash&.first(9), "#{Danbooru.config.source_code_url}/commits/#{Rails.application.config.x.git_hash}", title: Rails.application.config.x.git_hash %>
+      </span>
+    </footer>
+  </div>
+</div>
