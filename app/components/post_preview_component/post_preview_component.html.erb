@@ -32,6 +32,9 @@
       </picture>
     <% end -%>
   </div>
+  <div class="post-dimensions">
+    <%= link_to "#{media_asset.image_width} × #{media_asset.image_height}", media_asset.variant("original").file_url %>
+  </div>
   <% if recommended -%>
     <p class="desc recommended">
       <%= link_to recommended_posts_path(search: { post_id: post.id }), class: "more-recommended-posts", "data-post-id": post.id do %>

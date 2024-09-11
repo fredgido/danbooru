@@ -129,3 +129,14 @@ body[data-current-user-is-approver="true"] .post-preview {
     border: none !important;
   }
 }
+
+.post-dimensions {
+  width: fit-content;
+  font-size: 80%;
+  margin: 0.25em auto 0 auto;
+  background-color: #111;
+
+  :hover {
+    background-color: #300;
+  }
+}
