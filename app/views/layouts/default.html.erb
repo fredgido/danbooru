@@ -100,7 +100,7 @@
 
         <% unless CurrentUser.is_anonymous? %>
           <li id="nav-toggle-safe-mode">
-            <%= link_to user_path(CurrentUser.id, format: :js), "data-params": { user: { enable_safe_mode: !CurrentUser.safe_mode? } }.to_param, method: :put, remote: true do %>
+            <%= link_to user_path(CurrentUser.id, format: :js), "data-params": { user: { enable_safe_mode: !CurrentUser.safe_mode? } }.to_param, method: :put, remote: true, "data-confirm": "Are you sure you want to #{CurrentUser.safe_mode? ? 'disable' : 'enable'} safe mode?" do %>
               <%= CurrentUser.safe_mode? ? "Explicit" : "Safe Mode" %>
             <% end %>
           </li>
