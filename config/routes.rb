@@ -8,10 +8,6 @@
 # @see https://guides.rubyonrails.org/routing.html
 # @see http://localhost:3000/rails/info/routes
 Rails.application.routes.draw do
-  resources :posts, only: [:index, :show, :update, :destroy, :new, :create] do
-    get :random, on: :collection
-  end
-
   resources :autocomplete, only: [:index]
 
   root "home#index"
@@ -187,8 +183,7 @@ Rails.application.routes.draw do
   resources :post_replacements, only: [:index, :show, :new, :create, :update]
   resources :post_votes, only: [:index, :show, :create, :destroy]
 
-  # XXX Use `only: []` to avoid redefining post routes defined at top of file.
-  resources :posts, only: [] do
+  resources :posts, only: [:index, :show, :update, :destroy, :new, :create] do
     resources :events, only: [:index], controller: "post_events", as: "post_events"
     resources :favorites, only: [:index, :create, :destroy]
     resources :replacements, :only => [:index, :new, :create], :controller => "post_replacements"
@@ -202,6 +197,11 @@ Rails.application.routes.draw do
       put :copy_notes
       get :show_seq
       put :mark_as_translated
+    end
+    collection do
+      get :random
+      get :advanced_search
+      post :advanced_search
     end
     get :similar, :to => "iqdb_queries#index"
   end
@@ -326,6 +326,7 @@ Rails.application.routes.draw do
   get "/post/index" => redirect {|params, req| "/posts?tags=#{CGI.escape(req.params[:tags].to_s)}&page=#{req.params[:page]}"}
   get "/post/atom" => redirect {|params, req| "/posts.atom?tags=#{CGI.escape(req.params[:tags].to_s)}"}
   get "/post/show/:id/:tag_title" => redirect("/posts/%{id}")
+  get "/post/advanced_search" => redirect("/posts/advanced_search")
   get "/post/show/:id" => redirect("/posts/%{id}")
 
   get "/tag" => redirect {|params, req| "/tags?page=#{req.params[:page]}&search[name_matches]=#{CGI.escape(req.params[:name].to_s)}&search[order]=#{req.params[:order]}&search[category]=#{req.params[:type]}"}

@@ -137,6 +137,50 @@ class PostsController < ApplicationController
     end
   end
 
+  def advanced_search
+    return unless request.post?
+
+    search_params = params["search"].slice("q", "size_type", "width", "height", "order", "rating").permit!.to_h
+
+    tags = search_params["q"]
+
+    if search_params["size_type"] != "Any" && (search_params["width"].present? || search_params["height"].present?)
+      prefix = case search_params["size_type"]
+      when "Larger"
+        ">="
+      when "Smaller"
+        "<"
+      end
+
+      width = search_params["width"].present? ? "width:#{prefix}#{search_params['width']}" : ""
+      height = search_params["height"].present? ? "height:#{prefix}#{search_params['height']}" : ""
+
+      tags = "#{tags} #{width} #{height}".strip
+    end
+
+    case search_params["order"]
+    when "Score"
+      tags = "#{tags} order:score".strip
+    when "Favorited"
+      tags = "#{tags} order:favcount".strip
+    when "Widescreen first"
+      tags = "#{tags} order:landscape".strip
+    when "Widescreen last"
+      tags = "#{tags} order:portrait".strip
+    end
+
+    rating = search_params["rating"].compact_blank.map(&:first).join(",").downcase
+    if rating.present?
+      tags = "#{tags} rating:#{rating}".strip
+    end
+
+    if tags.present?
+      redirect_to posts_path(tags: tags, z: 6)
+    else
+      redirect_to posts_path
+    end
+  end
+
   def mark_as_translated
     @post = authorize Post.find(params[:id])
     @post.mark_as_translated(params[:post])
