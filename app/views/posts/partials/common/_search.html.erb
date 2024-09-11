@@ -1,7 +1,8 @@
 <%# path, tags %>
 
 <section id="search-box">
-  <h2>Search</h2>
+  <!--<h2>Search (<%= link_to "Advanced", advanced_search_posts_path(**request.query_parameters) %>)</h2>-->
+  <h2>Search (<%= link_to "Advanced", advanced_search_posts_path %>)</h2>
 
   <%= form_tag(path, method: "get", id: "search-box-form", class: "flex") do %>
     <% if current_page?(action: "index") %>

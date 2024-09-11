@@ -223,3 +223,17 @@ div#c-post-versions, div#c-artist-versions {
     }
   }
 }
+
+div#c-posts div#a-advanced-search {
+  div.radio_buttons > label {
+    font-size: var(--text-md);
+  }
+
+  div#dimensions {
+    display: flex;
+
+    > div:first-child {
+      padding-right: 0.5em;
+    }
+  }
+}
