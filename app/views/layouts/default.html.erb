@@ -97,6 +97,15 @@
         <%= nav_link_to("Notes", notes_path) %>
         <%= nav_link_to("Artists", artists_path) %>
         <%= nav_link_to("Tags", tags_path) %>
+
+        <% unless CurrentUser.is_anonymous? %>
+          <li id="nav-toggle-safe-mode">
+            <%= link_to user_path(CurrentUser.id, format: :js), "data-params": { user: { enable_safe_mode: !CurrentUser.safe_mode? } }.to_param, method: :put, remote: true do %>
+              <%= CurrentUser.safe_mode? ? "Explicit" : "Safe Mode" %>
+            <% end %>
+          </li>
+        <% end %>
+
         <%= nav_link_to("Pools", gallery_pools_path) %>
         <%= nav_link_to("Wiki", wiki_page_path("help:home")) %>
         <%= nav_link_to("Forum", forum_topics_path, class: ("forum-updated" if CurrentUser.has_forum_been_updated?)) if Danbooru.config.forum_enabled?.to_s.truthy? %>
