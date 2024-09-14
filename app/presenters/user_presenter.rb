@@ -124,4 +124,20 @@ class UserPresenter
       []
     end
   end
+
+  def user_tags
+    @user_tags ||= UserTagsCalculator.new(user).calculate_tags
+  end
+
+  def favorite_tags
+    user_tags[:favorite_tags]
+  end
+
+  def post_tags
+    user_tags[:post_tags]
+  end
+
+  def grouped_post_tags
+    user_tags[:grouped_post_tags]
+  end
 end

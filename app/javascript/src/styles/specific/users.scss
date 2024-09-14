@@ -1,10 +1,27 @@
 div#c-users {
   div#a-show {
-    table.user-statistics {
+    @media screen and (orientation:landscape) and (min-width:720px) {
+      div#statistics-container {
+        display: flex;
+
+        > table {
+          display: flex;
+        }
+      }
+    }
+
+    table.user-statistics, table.user-tag-statistics {
+      flex: 1;
+      padding-left: 8em;
+      max-width: 750px;
+
       th {
-        width: 15%;
         text-align: right;
         padding-right: 1em;
+
+        @media screen and (orientation:portrait) {
+          width: 13em;
+        }
       }
 
       .user-verified-email-icon {
