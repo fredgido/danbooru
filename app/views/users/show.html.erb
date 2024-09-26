@@ -5,6 +5,8 @@
   <div id="a-show">
     <h1><%= link_to_user @user %></h1>
 
+    <%= render ProfilePictureComponent.new(@user.profile_picture) %>
+
     <%= render "statistics", presenter: @user.presenter, user: @user %>
 
     <%= render "posts/partials/common/inline_blacklist" %>

@@ -1,0 +1,1 @@
+../../javascript/src/javascripts/profile_picture_cropper_component.js

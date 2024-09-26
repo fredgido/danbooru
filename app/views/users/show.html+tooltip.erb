@@ -1,6 +1,10 @@
 <div class="user-tooltip">
   <div class="user-tooltip-header">
-    <%= avatar_icon(class: "user-tooltip-avatar") %>
+    <% if @user.profile_picture.present? %>
+      <%= tag.img src: @user.profile_picture.avatar_media_asset.variant(:original).file_url, width: 32, height: 32, draggable: "false", class: "media-asset-image user-tooltip-avatar", id: "image" -%>
+    <% else %>
+      <%= avatar_icon(class: "user-tooltip-avatar") %>
+    <% end %>
 
     <div class="user-tooltip-header-top">
       <span class="user-tooltip-name"><%= link_to_user @user %></span>

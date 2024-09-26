@@ -217,6 +217,7 @@ Rails.application.routes.draw do
       get :search
     end
   end
+  resources :profile_pictures
   resources :artist_commentaries, :only => [:index, :show] do
     collection do
       put :create_or_update

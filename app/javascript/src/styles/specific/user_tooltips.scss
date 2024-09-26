@@ -15,6 +15,10 @@
       font-size: 32px;
       grid-area: avatar;
       align-self: center;
+
+      &.media-asset-image {
+        border-radius: 5px;
+      }
     }
 
     .user-tooltip-header-top {

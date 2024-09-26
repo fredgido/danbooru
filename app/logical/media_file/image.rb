@@ -174,6 +174,16 @@ class MediaFile::Image < MediaFile
     MediaFile::Image.new(preview_frame.file).resize!(w, h, **options)
   end
 
+  def crop!(left, top, width, height)
+    cropped_image = image.crop(left, top, width, height)
+
+    output_file = Danbooru::Tempfile.new(["danbooru-image-crop-#{md5}-", ".jpeg"])
+    cropped_image.jpegsave(output_file.path, Q: 100, strip: true, interlace: true, optimize_coding: true, optimize_scans: true, trellis_quant: true, overshoot_deringing: true, quant_table: 3)
+
+    cropped_image.release
+    MediaFile::Image.new(output_file).resize!(ProfilePicture::AVATAR_SIZE, ProfilePicture::AVATAR_SIZE)
+  end
+
   def is_animated?
     frame_count.to_i > 1
   end

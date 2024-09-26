@@ -32,6 +32,19 @@
                         <%= download_icon %> Download
                       <% end %>
                     <% end %>
+                    <% if @media_asset.role == "avatar" %>
+                      <% menu.with_item do %>
+                        <%= link_to profile_pictures_path(media_asset_id: @media_asset), remote: true, xhr: true, method: :post, "data-confirm": "Are you sure you want to use this file as a profile picture?" do %>
+                          <%= avatar_icon %> Set as avatar
+                        <% end %>
+                      <% end %>
+                    <% else %>
+                      <% menu.with_item do %>
+                        <%= link_to new_profile_picture_path(profile_picture: { source_media_asset_id: @media_asset.id }) do %>
+                          <%= avatar_icon %> Set as avatar
+                        <% end %>
+                      <% end %>
+                    <% end %>
 
                     <% menu.with_item do %>
                       <hr class="border">

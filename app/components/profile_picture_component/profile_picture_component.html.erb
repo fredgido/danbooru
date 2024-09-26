@@ -1,0 +1,13 @@
+<div class="profile-picture-component">
+  <% if profile_picture.present? %>
+    <% if profile_picture.source_media_asset.post.present? %>
+      <%= link_to post_path(profile_picture.source_media_asset.post) do %>
+        <%= tag.img src: variant(:original).file_url, width: image_width, height: image_height, draggable: "false", class: "media-asset-image", id: "image" -%>
+      <% end %>
+    <% else %>
+      <%= link_to media_asset_path(profile_picture.source_media_asset) do %>
+        <%= tag.img src: variant(:original).file_url, width: image_width, height: image_height, draggable: "false", class: "media-asset-image", id: "image" -%>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

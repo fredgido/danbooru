@@ -1,0 +1,1 @@
+../../javascript/src/javascripts/profile_picture_component.js

@@ -1,0 +1,29 @@
+<div class="profile-picture-cropper-component" style="--header-initial-height: 0px; --header-visible-height: 0px; --media-asset-width: <%= image_width %>; --media-asset-height: <%= image_height %>;">
+  <div class="profile-picture-container">
+    <% if media_asset.removed? %>
+      <p>Image deleted.</p>
+    <% elsif media_asset.processing? %>
+      <p><%= spinner_icon(class: "h-8") %></p>
+    <% elsif media_asset.failed? %>
+      <p>Upload failed.</p>
+    <% elsif !media_asset.active? || !policy(media_asset).can_see_image? %>
+      <p>Image unavailable.</p>
+    <% elsif is_image? %>
+      <%= tag.img src: variant(:original).file_url, width: image_width, height: image_height, draggable: "false", class: "media-asset-image", id: "image" -%>
+    <% else %>
+      <p>Invalid filetype.</p>
+    <% end %>
+  </div>
+  <div id="sidebar">
+    <div id="selection-preview"></div>
+    <form id="submit-profile-picture-form" method="POST" action="<%= profile_pictures_path %>">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <%= hidden_field_tag "profile_picture[source_media_asset_id]", media_asset.id %>
+      <%= hidden_field_tag "profile_picture[left]", profile_picture.left, class: "left" %>
+      <%= hidden_field_tag "profile_picture[top]", profile_picture.top, class: "top" %>
+      <%= hidden_field_tag "profile_picture[width]", profile_picture.width, class: "width" %>
+      <%= hidden_field_tag "profile_picture[height]", profile_picture.height, class: "height" %>
+      <button class="button-primary" type="button" id="set-profile-picture">Set avatar</button>
+    </form>
+  </div>
+</div>

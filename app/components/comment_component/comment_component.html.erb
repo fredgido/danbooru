@@ -28,6 +28,9 @@
       <% end %>
     </div>
     <%= link_to time_ago_in_words_tagged(comment.created_at), comment, class: "message-timestamp", rel: "nofollow" %>
+    <% if !(redact_deleted? && !can_see_creator?) %>
+      <%= render ProfilePictureComponent.new(comment.creator.profile_picture) %>
+    <% end %>
   </div>
 
   <div class="content">

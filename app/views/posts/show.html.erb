@@ -19,6 +19,8 @@
   <section id="post-information">
     <h2>Information</h2>
 
+    <%= render ProfilePictureComponent.new(@post.uploader.profile_picture) %>
+
     <ul>
       <li id="post-info-id">ID: <%= @post.id %></li>
 
@@ -116,6 +118,12 @@
 
         <li id="post-option-remove-from-favorites">
           <%= link_to "Unfavorite", favorite_path(@post), remote: true, method: :delete, id: "remove-from-favorites", "data-shortcut": "shift+f", "data-shortcut-when": ":visible", style: ("display: none;" if !@post.favorited_by?(CurrentUser.user)) %>
+        </li>
+      <% end %>
+
+      <% if policy(@post).set_avatar? %>
+        <li id="post-set-avatar">
+          <%= link_to "Set avatar", new_profile_picture_path(profile_picture: { source_media_asset_id: @post.media_asset.id }) %>
         </li>
       <% end %>
 

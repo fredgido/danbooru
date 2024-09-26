@@ -1017,7 +1017,8 @@ CREATE TABLE public.media_assets (
     status integer DEFAULT 200 NOT NULL,
     file_key character varying NOT NULL,
     is_public boolean DEFAULT true NOT NULL,
-    pixel_hash uuid NOT NULL
+    pixel_hash uuid NOT NULL,
+    role character varying DEFAULT 'image'::character varying NOT NULL
 );
 
 
@@ -1718,6 +1719,43 @@ CREATE SEQUENCE public.posts_id_seq
 --
 
 ALTER SEQUENCE public.posts_id_seq OWNED BY public.posts.id;
+
+
+--
+-- Name: profile_pictures; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.profile_pictures (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    source_media_asset_id bigint NOT NULL,
+    avatar_media_asset_id bigint NOT NULL,
+    height integer NOT NULL,
+    width integer NOT NULL,
+    top integer NOT NULL,
+    "left" integer NOT NULL
+);
+
+
+--
+-- Name: profile_pictures_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.profile_pictures_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: profile_pictures_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.profile_pictures_id_seq OWNED BY public.profile_pictures.id;
 
 
 --
@@ -2908,6 +2946,13 @@ ALTER TABLE ONLY public.posts ALTER COLUMN id SET DEFAULT nextval('public.posts_
 
 
 --
+-- Name: profile_pictures id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.profile_pictures ALTER COLUMN id SET DEFAULT nextval('public.profile_pictures_id_seq'::regclass);
+
+
+--
 -- Name: rate_limits id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -3383,6 +3428,14 @@ ALTER TABLE ONLY public.post_votes
 
 ALTER TABLE ONLY public.posts
     ADD CONSTRAINT posts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: profile_pictures profile_pictures_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.profile_pictures
+    ADD CONSTRAINT profile_pictures_pkey PRIMARY KEY (id);
 
 
 --
@@ -5359,6 +5412,13 @@ CREATE INDEX index_posts_on_uploader_id_and_created_at ON public.posts USING btr
 
 
 --
+-- Name: index_profile_pictures_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_profile_pictures_on_user_id ON public.profile_pictures USING btree (user_id);
+
+
+--
 -- Name: index_rate_limits_on_key_and_action; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -6820,12 +6880,30 @@ ALTER TABLE ONLY public.user_upgrades
 
 
 --
+-- Name: profile_pictures profile_pictures_avatar_media_asset_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.profile_pictures
+    ADD CONSTRAINT profile_pictures_avatar_media_asset_id_fkey FOREIGN KEY (avatar_media_asset_id) REFERENCES public.media_assets(id);
+
+
+--
+-- Name: profile_pictures profile_pictures_source_media_asset_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.profile_pictures
+    ADD CONSTRAINT profile_pictures_source_media_asset_id_fkey FOREIGN KEY (source_media_asset_id) REFERENCES public.media_assets(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241012193130'),
+('20240926020203'),
 ('20240607200251'),
 ('20240607200250'),
 ('20240607200249'),
