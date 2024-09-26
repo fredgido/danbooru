@@ -1,0 +1,7 @@
+<div id="c-profile-pictures">
+  <div id="a-show">
+    <h2><%= @profile_picture.user.pretty_name %>'s Avatar</h2>
+
+    <%= render ProfilePictureComponent.new(@profile_picture) %>
+  </div>
+</div>

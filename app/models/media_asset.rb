@@ -4,6 +4,7 @@ class MediaAsset < ApplicationRecord
   class Error < StandardError; end
 
   FILE_TYPES = %w[jpg png gif webp avif mp4 webm swf zip]
+  ROLES = %w[image avatar attachment]
   FILE_KEY_LENGTH = 9
   VARIANTS = %i[180x180 360x360 720x720 sample full original]
   MAX_FILE_SIZE = Danbooru.config.max_file_size.to_i
@@ -64,6 +65,7 @@ class MediaAsset < ApplicationRecord
   validates :file_size, comparison: { greater_than: 0 }, if: :file_size_changed?
   validates :image_width, comparison: { greater_than: 0 }, if: :image_width_changed?
   validates :image_height, comparison: { greater_than: 0 }, if: :image_height_changed?
+  validates :role, inclusion: { in: ROLES, message: "Invalid role for media asset" }
 
   before_create :initialize_file_key
 
@@ -241,7 +243,13 @@ class MediaAsset < ApplicationRecord
       end
 
       def search(params, current_user)
-        q = search_attributes(params, [:id, :created_at, :updated_at, :status, :md5, :pixel_hash, :file_ext, :file_size, :image_width, :image_height, :duration, :file_key, :is_public], current_user: current_user)
+        q = search_attributes(params, [:id, :created_at, :updated_at, :status, :md5, :pixel_hash, :file_ext, :file_size, :image_width, :image_height, :duration, :file_key, :is_public, :role], current_user: current_user)
+
+        if params[:role].present?
+          q = q.where(role: params[:role])
+        else
+          q = q.where(role: "image")
+        end
 
         if params[:metadata].present?
           q = q.joins(:media_metadata).merge(MediaMetadata.search({ metadata: params[:metadata] }, current_user))
@@ -288,10 +296,10 @@ class MediaAsset < ApplicationRecord
       #
       # This can't be called inside a transaction because the transaction will
       # fail if there's a RecordNotUnique error when the asset already exists.
-      def upload!(media_file, &block)
+      def upload!(media_file, role: "image", &block)
         media_file = MediaFile.open(media_file) unless media_file.is_a?(MediaFile)
 
-        media_asset = create!(file: media_file, status: :processing)
+        media_asset = create!(file: media_file, role: role, status: :processing)
         yield media_asset if block_given?
 
         # XXX shouldn't generate thumbnail twice (very slow for ugoira)

@@ -99,6 +99,7 @@ class Post < ApplicationRecord
   has_many :reactions, as: :model, dependent: :destroy, class_name: "Reaction"
   has_many :dtext_links, -> { embedded_post }, foreign_key: :link_target
   has_many :embedding_wiki_pages, through: :dtext_links, source: :model, source_type: "WikiPage"
+  has_many :profile_pictures
 
   attr_accessor :old_tag_string, :old_parent_id, :old_source, :old_rating, :has_constraints, :disable_versioning, :post_edit
 

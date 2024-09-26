@@ -1,0 +1,20 @@
+<div id="c-profile-pictures">
+  <div id="a-index">
+  <h1>Profile pictures</h1>
+
+  <div id="profile_pictures">
+    <%= table_for @profile_pictures, class: "striped autofit" do |t| %>
+      <% t.column :avatar do |profile_picture| %>
+        <%= render ProfilePictureComponent.new(profile_picture) %>
+      <% end %>
+
+      <% t.column :user do |profile_picture| %>
+        <%= link_to_user profile_picture.user %>
+      <% end %>
+
+      <% t.column :created_at do |profile_picture| %>
+        <%= time_ago_in_words_tagged(profile_picture.created_at) %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

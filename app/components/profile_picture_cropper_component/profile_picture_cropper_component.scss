@@ -1,0 +1,35 @@
+@import "cropperjs/dist/cropper.css";
+
+.profile-picture-cropper-component {
+  --min-asset-height: 320px;
+  display: flex;
+
+  .media-asset-image {
+    user-select: none;
+    width: auto;
+    max-height: inherit;
+  }
+
+  & .profile-picture-container, & .profile-picture-container img {
+    max-width: 70vw;
+    height: auto;
+  }
+
+  & #sidebar {
+    margin-left: 0.5em;
+
+    & div#selection-preview {
+      margin-bottom: 0.25em;
+      height: 125px;
+      width: 125px;
+      cursor: crosshair;
+      border: 1px solid var(--note-preview-border-color);
+      overflow: hidden;
+      position: relative;
+
+      img {
+        position: absolute;
+      }
+    }
+  }
+}
