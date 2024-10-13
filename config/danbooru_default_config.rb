@@ -425,6 +425,18 @@ module Danbooru
     def contact_page_html
     end
 
+    def header_ad_html
+      <<~EOF
+        <span>Header ad</span>
+      EOF
+    end
+
+    def footer_ad_html
+      <<~EOF
+        <span>Footer ad</span>
+      EOF
+    end
+
     # The number of posts displayed per page.
     def posts_per_page
       20
