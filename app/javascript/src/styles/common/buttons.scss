@@ -42,7 +42,7 @@ input[type="button"], input[type="submit"], input[type="reset"], button {
 }
 
 /* Buttons, modeled after Material Design and Bootstrap. */
-a, button, input[type="submit"], input[type="button"] {
+a, button, input[type="submit"], input[type="button"], input[type="reset"] {
   &.button-primary, &.button-danger {
     @extend %button;
 
