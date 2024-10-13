@@ -108,6 +108,10 @@ html, body[data-current-user-theme="light"] {
   --body-background-color: var(--white);
   --text-color: var(--black);
 
+  --post-dimensions-color: var(--grey-2);
+  --post-dimensions-hover-text-color: var(--grey-0);
+  --post-dimensions-hover-color: var(--grey-4);
+
   --inverse-text-color: var(--white);
   --muted-text-color: var(--grey-4);
   --header-color: var(--grey-9);
@@ -351,6 +355,10 @@ html, body[data-current-user-theme="light"] {
   --body-background-color: var(--grey-9);
   --text-color: var(--grey-2);
 
+  --post-dimensions-color: var(--grey-7);
+  --post-dimensions-hover-text-color: var(--link-color);
+  --post-dimensions-hover-color: var(--grey-8);
+
   --inverse-text-color: var(--grey-0);
   --muted-text-color: var(--grey-4);
   --header-color: var(--grey-1);
@@ -578,12 +586,261 @@ html, body[data-current-user-theme="light"] {
   --deleted-artist-label-color: var(--grey-6);
 }
 
-body[data-current-user-theme="dark"] {
+@mixin konachan {
+  --body-background-color: #222;
+  --text-color: var(--grey-0);
+  --grey-8: #333;
+  --grey-7: #404040;
+
+  --post-dimensions-color: #111;
+  --post-dimensions-hover-color: #300;
+
+  --inverse-text-color: var(--grey-0);
+  --muted-text-color: var(--grey-4);
+  --header-color: var(--grey-1);
+  --link-color: #ee8887;
+  --link-hover-color: #ffaaae;
+
+  --success-color: var(--green-4);
+  --warning-color: var(--yellow-3);
+  --error-color: var(--red-4);
+
+  --success-hover-color: var(--green-3);
+  --warning-hover-color: var(--yellow-2);
+  --error-hover-color: var(--red-3);
+
+  --default-border-color: var(--grey-7);
+
+  --error-background-color: var(--red-9);
+  --success-background-color: var(--green-9);
+  --target-background: var(--azure-8);
+
+  --subnav-menu-background-color: var(--grey-8);
+  --responsive-menu-background-color: var(--grey-8);
+  --card-background-color: var(--grey-8);
+
+  --chip-primary-background-color: var(--grey-8);
+  --chip-red-background-color: var(--red-8);
+  --chip-green-background-color: var(--green-8);
+  --chip-blue-background-color: var(--blue-8);
+  --chip-yellow-background-color: var(--yellow-8);
+  --chip-red-border-color: var(--red-6);
+  --chip-green-border-color: var(--green-6);
+  --chip-blue-border-color: var(--blue-6);
+  --chip-yellow-border-color: var(--yellow-6);
+
+  --form-input-text-color: var(--grey-2);
+  --form-input-background: #444;
+  --form-input-disabled-background: #222;
+  --form-input-disabled-text: #454545;
+  --form-input-border-color: #767676;
+  --form-input-placeholder-text-color: #999;
+  --form-input-validation-error-border-color: var(--red-4);
+  --form-input-validation-error-text-color: var(--red-5);
+
+  --form-button-text-color: var(--grey-9);
+  --form-button-disabled-text-color: var(--grey-5);
+  --form-button-background: var(--grey-2);
+  --form-button-border-color: var(--grey-4);
+  --form-button-hover-background: var(--grey-0);
+  --form-button-hover-box-shadow-color: var(--grey-5);
+  --form-button-active-background: var(--grey-3);
+
+  --button-text-color: var(--white);
+  --button-disabled-color: var(--grey-4);
+
+  --button-primary-background-color: var(--link-color);
+  --button-primary-hover-background-color: var(--link-hover-color);
+
+  --button-danger-background-color: var(--red-4);
+  --button-danger-hover-background-color: var(--red-3);
+
+  --button-outline-primary-color: var(--azure-4);
+  --button-outline-danger-color: var(--red-4);
+
+  --quick-search-form-background: #252525;
+
+  --user-upgrade-basic-background-color: var(--grey-8);
+  --user-upgrade-gold-background-color: var(--grey-7);
+  --user-upgrade-platinum-background-color: var(--blue-9);
+
+  --table-header-border-color: var(--grey-7);
+  --table-row-border-color: var(--grey-7);
+  --table-even-row-background: var(--grey-8);
+  --table-row-hover-background: var(--grey-7);
+
+  --preview-pending-color: var(--azure-4);
+  --preview-flagged-color: var(--red-5);
+  --preview-deleted-color: var(--grey-3);
+  --preview-has-children-color: var(--green-3);
+  --preview-has-parent-color: var(--orange-3);
+  --preview-selected-color: rgba(255 255 255 / 25%);
+
+  --media-asset-placeholder-background-color: var(--grey-8);
+
+  --modqueue-tag-warning-color: var(--red-7);
+
+  --uploads-dropzone-background: var(--grey-7);
+  --uploads-dropzone-progress-bar-foreground-color: var(--blue-5);
+  --uploads-dropzone-progress-bar-background-color: var(--grey-6);
+
+  --forum-vote-up-color: var(--green-4);
+  --forum-vote-meh-color: var(--yellow-2);
+  --forum-vote-down-color: var(--red-4);
+
+  --forum-topic-status-new-color: var(--red-3);
+  --forum-topic-status-pending-color: var(--azure-3);
+  --forum-topic-status-approved-color: var(--green-3);
+  --forum-topic-status-rejected-color: var(--red-3);
+
+  --moderation-report-text-color: var(--red-4);
+  --moderation-report-background-color: var(--red-9);
+
+  --comment-sticky-background-color: var(--azure-8);
+
+  --post-tooltip-background-color: var(--grey-8);
+  --post-tooltip-border-color: var(--grey-7);
+  --post-tooltip-header-background-color: var(--grey-8);
+  --post-tooltip-info-color: var(--grey-2);
+
+  --post-tooltip-scrollbar-background: var(--grey-4);
+  --post-tooltip-scrollbar-thumb-color: var(--grey-5);
+  --post-tooltip-scrollbar-track-background: var(--grey-1);
+
+  --user-tooltip-positive-feedback-color: var(--yellow-1);
+  --user-tooltip-negative-feedback-color: var(--red-1);
+
+  --autocomplete-selected-background-color: var(--grey-7);
+  --autocomplete-border-color: var(--grey-4);
+
+  --diff-list-added-color: var(--green-4);
+  --diff-list-removed-color: var(--red-4);
+  --diff-list-obsolete-added-color: var(--green-6);
+  --diff-list-obsolete-removed-color: var(--red-6);
+
+  --wiki-page-versions-diff-del-background: var(--red-8);
+  --wiki-page-versions-diff-ins-background: var(--green-8);
+
+  --post-notice-border-color: var(--grey-7);
+  --post-parent-notice-background: var(--green-8);
+  --post-child-notice-background: var(--yellow-8);
+  --post-pending-notice-background: var(--blue-8);
+  --post-banned-notice-background: var(--red-8);
+  --post-deleted-notice-background: var(--red-8);
+  --post-resized-notice-background: var(--purple-8);
+  --post-search-notice-background: var(--grey-8);
+
+  --post-artist-commentary-container-background: var(--grey-8);
+  --post-artist-commentary-container-border-color: var(--grey-7);
+
+  --post-upvote-color: var(--link-color);
+  --post-downvote-color: var(--red-4);
+
+  --unsaved-note-box-border-color: var(--red-5);
+  --movable-note-box-border-color: var(--blue-5);
+  --note-preview-border-color: var(--red-5);
+  --note-highlight-color: var(--blue-5);
+
+  --series-pool-color: var(--copyright-tag-color);
+  --series-pool-hover-color: var(--copyright-tag-hover-color);
+
+  --collection-pool-color: var(--general-tag-color);
+  --collection-pool-hover-color: var(--general-tag-hover-color);
+
+  --post-mode-menu-active-post-outline-color: var(--azure-4);
+  --post-mode-menu-translation-background: var(--blue-8);
+
+  --low-post-count-color: var(--red-4);
+
+  --remove-favorite-button: var(--red-4);
+
+  --ugoira-seek-slider-background: var(--grey-2);
+  --ugoira-seek-slider-progressbar-background: var(--grey-0);
+
+  --keyboard-shortcut-color: var(--grey-0);
+  --keyboard-shortcut-background-color: var(--grey-7);
+
+  --login-link-color: var(--red-4);
+  --divider-border-color: var(--grey-7);
+  --divider-border-hover-color: var(--grey-6);
+
+  --jquery-ui-widget-content-text-color: var(--text-color);
+  --jquery-ui-widget-content-background: var(--grey-8);
+
+  --notice-error-background: var(--red-8);
+  --notice-error-border-color: var(--red-7);
+  --notice-info-background: var(--grey-8);
+  --notice-info-border-color: var(--grey-6);
+
+  --dtext-blockquote-border-color: var(--grey-4);
+  --dtext-hr-color: var(--grey-7);
+  --dtext-code-background: var(--grey-8);
+  --dtext-details-background-color: var(--grey-8);
+  --dtext-details-summary-background-color: var(--grey-7);
+  --dtext-details-summary-hover-background-color: var(--grey-6);
+  --dtext-details-summary-text-color: var(--text-color);
+  --dtext-spoiler-background-color: black;
+  --dtext-spoiler-hover-color: var(--grey-0);
+
+  --paginator-arrow-background-color: var(--grey-0);
+  --paginator-arrow-color: var(--link-color);
+
+  --asset-paginator-link-color: var(--white);
+  --asset-paginator-link-hover-color: var(--white);
+  --asset-paginator-background-color: var(--grey-9);
+  --asset-paginator-background-hover-color: var(--grey-8);
+
+  --artist-tag-color: #cc0;
+  --artist-tag-hover-color: rgb(245, 245, 47);
+  --copyright-tag-color: var(--purple-3);
+  --copyright-tag-hover-color: var(--purple-2);
+  --character-tag-color: rgba(93, 247, 93, 0.767);
+  --character-tag-hover-color: rgba(95, 253, 95, 0.89);
+  --general-tag-color: var(--link-color);
+  --general-tag-hover-color: var(--link-hover-color);
+  --meta-tag-color: var(--yellow-2);
+  --meta-tag-hover-color: var(--yellow-1);
+
+  --user-admin-color: var(--red-3);
+  --user-moderator-color: var(--green-3);
+  --user-builder-color: var(--purple-3);
+  --user-platinum-color: var(--grey-3);
+  --user-gold-color: var(--yellow-2);
+  --user-member-color: var(--azure-4);
+  --user-restricted-color: var(--azure-4);
+  --user-banned-color: var(--grey-6);
+
+  --user-verified-email-color: var(--green-3);
+  --user-unverified-email-color: var(--yellow-2);
+
+  --news-updates-background: var(--grey-7);
+  --news-updates-border-color: var(--grey-6);
+
+  --inactive-artist-url-color: var(--red-4);
+  --inactive-artist-url-hover-color: var(--red-3);
+  --banned-artist-label-color: var(--red-5);
+  --deleted-artist-label-color: var(--grey-6);
+}
+
+body[data-current-user-theme="konachan"] {
+  @include konachan;
+}
+
+body[data-current-user-theme="danbooru_dark"] {
   @include dark-theme;
 }
 
 @media (prefers-color-scheme: dark) {
-  body {
+  body[data-current-user-theme="danbooru_auto"] {
     @include dark-theme;
+  }
+
+  body[data-current-user-theme="konachan_auto"] {
+    @include konachan;
+  }
+
+  body:not([data-current-user-theme]) {
+    // override on blank layout
+    @include konachan;
   }
 }

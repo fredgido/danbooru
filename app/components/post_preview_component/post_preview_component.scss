@@ -131,12 +131,19 @@ body[data-current-user-is-approver="true"] .post-preview {
 }
 
 .post-dimensions {
-  width: fit-content;
+  max-width: 190px;
   font-size: 80%;
   margin: 0.25em auto 0 auto;
-  background-color: #111;
+  background-color: var(--post-dimensions-color);
+  text-align: center;
 
-  :hover {
-    background-color: #300;
+  &:hover {
+    color: var(--post-dimensions-hover-text-color);
+    background-color: var(--post-dimensions-hover-color);
+  }
+
+  a {
+    width: 100%;
+    height: 100%;
   }
 }
