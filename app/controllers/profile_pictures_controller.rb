@@ -3,6 +3,9 @@
 class ProfilePicturesController < ApplicationController
   respond_to :html, :json, :xml, :js
 
+  rate_limit :create, rate: 1.0/1.hour, burst: 3
+  rate_limit :update, rate: 1.0/1.hour, burst: 3
+
   def index
     @profile_pictures = authorize ProfilePicture.includes(:user, :avatar_media_asset).paginated_search(params)
     respond_with(@profile_pictures)
