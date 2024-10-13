@@ -144,7 +144,18 @@ class PostsController < ApplicationController
 
     tags = search_params["q"]
 
-    if search_params["size_type"] != "Any" && (search_params["width"].present? || search_params["height"].present?)
+    if search_params["resolution"].present?
+      resolution = case search_params["resolution"].downcase
+      when "4k"
+        "width:3840 height:2160"
+      when "1440p"
+        "width:2560 height:1440"
+      when "1080p"
+        "width:1920 height:1080"
+      end
+
+      tags = "#{tags} #{resolution}".strip
+    elsif search_params["size_type"] != "Any" && (search_params["width"].present? || search_params["height"].present?)
       prefix = case search_params["size_type"]
       when "Larger"
         ">="

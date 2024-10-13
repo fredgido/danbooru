@@ -2,18 +2,30 @@
   <div id="a-advanced-search">
     <h1>Advanced Search</h1>
 
-    <%= simple_form_for(:search, id: "search-form-box", url: advanced_search_posts_path, html: { class: "stacked-hints" }) do |f| %>
+    <%= simple_form_for(:search, id: "search-form-box", url: advanced_search_posts_path, html: { class: "stacked-hints w-fit" }) do |f| %>
       <%= f.input :q, as: :string, label: "Tags", required: false, hint: "Use * as wildcard", input_html: { "data-autocomplete": "tag-query", "autocapitalize": "none" } %>
       <%= f.input :exclude, as: :string, label: "Blacklist", required: false, disabled: true, input_html: { value: "Not working yet!" } %>
-      <%= f.input :size_type, as: :radio_buttons, label: "Size", required: false, wrapper_html: { class: "radio-button-group text-xs" }, collection: ["Any", "Larger", "Exact", "Smaller"] %>
-      <div id="dimensions">
-        <%= f.input :width, as: :select, required: false, include_blank: true, collection: [2560, 1920, 1680, 1600, 1440, 1400, 1280, 1152, 1024] %>
-        <%= f.input :height, as: :select, required: false, include_blank: true, collection: [1600, 1200, 1080, 1050, 1024, 960, 900, 864, 800, 768] %>
+      <div>
+      <%= render(TabPanelComponent.new do |t| %>
+        <% t.panel("Common Resolutions", active: true) do %>
+          <%= f.input :resolution, as: :radio_buttons, label: "", required: false, wrapper_html: { class: "radio-button-group text-xs" }, collection: ["4K", "1440p", "1080p"], hint: "Overrides width and height" %>
+        <% end %>
+
+        <% t.panel("Custom") do %>
+          <%= f.input :size_type, as: :radio_buttons, label: "", required: false, wrapper_html: { class: "radio-button-group text-xs" }, collection: [["Any", "Any"], ["Larger Than", "Larger"], ["Exactly", "Exact"], ["Smaller Than", "Smaller"]] %>
+          <div id="dimensions">
+            <%= f.input :width, as: :select, required: false, include_blank: true, collection: [2560, 1920, 1680, 1600, 1440, 1400, 1280, 1152, 1024] %>
+            <%= f.input :height, as: :select, required: false, include_blank: true, collection: [1600, 1200, 1080, 1050, 1024, 960, 900, 864, 800, 768] %>
+          </div>
+        <% end %>
+      <% end) %>
       </div>
       <%= f.input :order, as: :radio_buttons, required: false, wrapper_html: { class: "radio-button-group text-xs" }, collection: ["Default", "Score", "Favorites", "Widescreen first", "Widescreen last"] %>
-      <%= f.input :rating, as: :check_boxes, required: false, wrapper_html: { class: "checkbox-group text-xs" }, collection: ["General", "Sensitive", "Questionable", "Explicit"] %>
-      <%= f.submit "Search" %>
-      <%= f.submit "Reset", type: :reset %>
+      <%= f.input :rating, as: :check_boxes, required: false, wrapper_html: { class: "checkbox-group text-xs" }, collection: ["General", "Sensitive", "Questionable", "Explicit"], hint: "Select all you want to include" %>
+      <%= f.submit "Search", class: "button-primary" %>
+      <%= f.submit "Reset", type: :reset, class: "button-danger" %>
     <% end %>
   </div>
 </div>
+
+<% page_title "Advanced Post Search" %>
