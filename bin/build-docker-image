@@ -24,14 +24,14 @@
 #    $ bin/build-docker-image danbooru linux/amd64,linux/arm64
 #
 #    # Test out the new image.
-#    $ DANBOORU_IMAGE=danbooru:development bin/dev
+#    $ IMAGE=danbooru:development bin/dev
 
 set -euxo pipefail
 
 ARCH="$(docker info -f '{{ .ClientInfo.Arch }}')"
 CURRENT_PLATFORM="linux/$ARCH"
 
-IMAGE="${1:-danbooru}"
+IMAGE="${1:-konachan}"
 PLATFORM="${2:-$CURRENT_PLATFORM}"
 
 DOCKER_IMAGE_REVISION=$(git rev-parse HEAD)
