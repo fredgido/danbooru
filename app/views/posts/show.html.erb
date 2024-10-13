@@ -376,6 +376,10 @@
     </section>
   <% end %>
 
+  <div class="ad-container">
+    <%= Danbooru.config.footer_ad_html.html_safe %>
+  </div>
+
   <section id="notes" style="display: none;">
     <% if @post.has_notes? %>
       <% @post.notes.active.each do |note| %>
