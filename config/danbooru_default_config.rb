@@ -905,6 +905,10 @@ module Danbooru
       }
     end
 
+    # Legacy salt for old SHA1 password hashing
+    def legacy_password_salt
+      "So-I-Heard-You-Like-Mupkids-?"
+    end
     def reactions
       {}
     end

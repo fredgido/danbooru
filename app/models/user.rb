@@ -318,11 +318,25 @@ class User < ApplicationRecord
     # @return [User, Boolean] Return the user if the password is correct, or false if it isn't.
     def authenticate_password(password)
       return false if is_deleted?
-      BCrypt::Password.new(bcrypt_password_hash) == hash_password(password) && self
+
+      if bcrypt_password_hash.present? && BCrypt::Password.new(bcrypt_password_hash) == hash_password(password)
+        return self
+      end
+
+      if legacy_password_hash.present? && legacy_password_hash == legacy_hash_password(password)
+        self.update(bcrypt_password_hash: BCrypt::Password.create(hash_password(password)), legacy_password_hash: nil)
+        return self
+      end
+      false
     end
 
     def hash_password(password)
       Digest::SHA1.hexdigest("choujin-steiner--#{password}--")
+    end
+
+    # SHA1 method for legacy password hashing
+    def legacy_hash_password(password)
+      Digest::SHA1.hexdigest("#{Danbooru.config.legacy_password_salt || ""}--#{password}--")
     end
   end
 
