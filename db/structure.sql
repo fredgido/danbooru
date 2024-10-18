@@ -652,7 +652,8 @@ ALTER SEQUENCE public.favorite_groups_id_seq OWNED BY public.favorite_groups.id;
 CREATE TABLE public.favorites (
     id integer NOT NULL,
     user_id integer NOT NULL,
-    post_id integer NOT NULL
+    post_id integer NOT NULL,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 
@@ -1838,7 +1839,8 @@ CREATE TABLE public.saved_searches (
     query character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    labels text[] DEFAULT '{}'::text[] NOT NULL
+    labels text[] DEFAULT '{}'::text[] NOT NULL,
+    is_visible_on_profile boolean DEFAULT false NOT NULL
 );
 
 
@@ -6902,6 +6904,8 @@ ALTER TABLE ONLY public.profile_pictures
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241018035234'),
+('20241018034758'),
 ('20241012193130'),
 ('20240926020203'),
 ('20240607200251'),
