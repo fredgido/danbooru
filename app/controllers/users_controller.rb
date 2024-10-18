@@ -142,6 +142,33 @@ class UsersController < ApplicationController
     expires_in 10.years
   end
 
+  def toggle_safe_mode
+    @safe_mode = params[:safe_mode].to_s.truthy?
+    @url = Danbooru::URL.parse(request.base_url)
+
+    if CurrentUser.is_anonymous?
+      if @safe_mode && !@url.host.in?(Danbooru.config.safe_mode_hostnames)
+        # redirect to safe domain
+        url = "https://#{Danbooru.config.safe_mode_hostnames.first}#{@url.path}"
+        url << "?#{@url.query}" if @url.query.present?
+        return redirect_to url, allow_other_host: true
+      elsif @safe_mode
+        # do nothing, we're already on safe mode
+      else
+        url = "https://#{Danbooru.config.alternate_domains.first}#{@url.path}"
+        url << "?#{@url.query}" if @url.query.present?
+        return redirect_to url, allow_other_host: true
+      end
+    else
+      CurrentUser.user.update!(enable_safe_mode: @safe_mode) if CurrentUser.user.enable_safe_mode != @safe_mode
+      if !@safe_mode && @url.host.in?(Danbooru.config.safe_mode_hostnames)
+        url = "https://#{Danbooru.config.alternate_domains.first}#{@url.path}"
+        url << "?#{@url.query}" if @url.query.present?
+        return redirect_to url, allow_other_host: true
+      end
+    end
+  end
+
   private
 
   def set_timeout

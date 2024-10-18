@@ -47,14 +47,14 @@ module Danbooru
     # The name of this Danbooru.
     def app_name
       if CurrentUser.safe_mode?
-        "Safebooru"
+        "Konachan"
       else
-        "Danbooru"
+        "Konachan"
       end
     end
 
     def canonical_app_name
-      "Danbooru"
+      "Konachan"
     end
 
     # A list of alternate domains for your site, if your site is accessible under multiple domains. For example,
@@ -64,12 +64,12 @@ module Danbooru
     #
     # Most people should leave this empty.
     def alternate_domains
-      []
+      ["konachan.com", "konachan.net"]
     end
 
     # A list of alternate hostnames where safe mode will automatically be enabled.
     def safe_mode_hostnames
-      ["safebooru.donmai.us"]
+      ["konachan.net"]
     end
 
     # The URL for your site, if you have a custom domain name for your site.
@@ -130,7 +130,7 @@ module Danbooru
     #
     # Run `rake db:seed` to create this account if it doesn't already exist in your install.
     def system_user
-      "DanbooruBot"
+      "KonachanBot"
     end
 
     # The name of the cookie that stores the current user's login session.
