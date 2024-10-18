@@ -245,7 +245,7 @@ Rails.application.routes.draw do
   resources :tag_aliases, only: [:show, :index, :destroy]
   resources :tag_implications, only: [:show, :index, :destroy]
   resources :tag_versions, only: [:index, :show]
-
+  post "/toggle_safe_mode", to: "users#toggle_safe_mode", as: "toggle_safe_mode"
   get "/redeem", to: "upgrade_codes#redeem", as: "redeem_upgrade_codes"
   resources :upgrade_codes, only: [:create, :index] do
     get :redeem, on: :collection
