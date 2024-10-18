@@ -2228,7 +2228,8 @@ CREATE TABLE public.users (
     upload_points integer NOT NULL,
     is_deleted boolean DEFAULT false NOT NULL,
     totp_secret character varying,
-    backup_codes integer[]
+    backup_codes integer[],
+    legacy_password_hash text
 );
 
 
@@ -6903,6 +6904,7 @@ ALTER TABLE ONLY public.profile_pictures
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241018065315'),
 ('20241026212428'),
 ('20241012193130'),
 ('20240926020203'),
