@@ -299,7 +299,8 @@ class MediaAsset < ApplicationRecord
       def upload!(media_file, role: "image", &block)
         media_file = MediaFile.open(media_file) unless media_file.is_a?(MediaFile)
 
-        media_asset = create!(file: media_file, role: role, status: :processing)
+        # media_asset = create!(file: media_file, role: role, status: :processing)
+        media_asset = find_by!(md5: media_file.md5)
         yield media_asset if block_given?
 
         # XXX shouldn't generate thumbnail twice (very slow for ugoira)
