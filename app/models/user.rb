@@ -323,8 +323,8 @@ class User < ApplicationRecord
         return self
       end
 
-      if legacy_password_hash.present? && legacy_password_hash == legacy_hash_password(password)
-        self.update(bcrypt_password_hash: BCrypt::Password.create(hash_password(password)), legacy_password_hash: nil)
+      if legacy_password_hash.present? && ActiveSupport::SecurityUtils.secure_compare(legacy_password_hash,legacy_hash_password(password))
+        self.update!(password: password, legacy_password_hash: nil)
         return self
       end
       false
