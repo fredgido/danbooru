@@ -135,6 +135,8 @@ services:
       retries: 1
     volumes:
       - "danbooru-data:/var/lib/postgresql/data"
+    ports:
+      - "6501:5432"
 
   nginx:
     image: ${DANBOORU_IMAGE:-konachan:development}
