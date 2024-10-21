@@ -162,6 +162,7 @@ services:
         target: /usr/local/nginx/conf/nginx.conf
     volumes:
       - "danbooru-images:/images"
+      - ${DANBOORU_DIR:-./}/public:/danbooru/public
 
   autotagger:
     image: ghcr.io/danbooru/autotagger:latest
