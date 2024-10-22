@@ -4,6 +4,6 @@
 # Spawned by {DanbooruMaintenance}.
 class DmailInactiveApproversJob < ApplicationJob
   def perform
-    ApproverPruner.dmail_inactive_approvers!
+    # ApproverPruner.dmail_inactive_approvers!
   end
 end
