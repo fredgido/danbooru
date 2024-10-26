@@ -57,3 +57,16 @@
     color: var(--meta-tag-hover-color);
   }
 }
+
+.tag-type-6 a, a.tag-type-6 {
+  color: var(--circle-tag-color);
+
+  &:link, &:visited {
+    color: var(--circle-tag-color);
+  }
+
+  &:hover {
+    color: var(--circle-tag-hover-color);
+  }
+}
+

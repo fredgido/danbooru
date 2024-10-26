@@ -11,6 +11,7 @@ module TagCategory
   COPYRIGHT = 3
   CHARACTER = 4
   META = 5
+  CIRCLE = 6
 
   # Returns a hash mapping various tag categories to a numerical value.
   def mapping
@@ -26,6 +27,7 @@ module TagCategory
       "character" => 4,
       "copyright" => 3,
       "artist" => 1,
+      "circle" => 6,
     }
   end
 
@@ -33,6 +35,7 @@ module TagCategory
   def canonical_mapping
     {
       "Artist"    => 1,
+      "Circle"     => 6,
       "Copyright" => 3,
       "Character" => 4,
       "General"   => 0,
@@ -48,6 +51,7 @@ module TagCategory
       3 => "copyright",
       1 => "artist",
       5 => "meta",
+      6 => "circle",
     }
   end
 
@@ -58,11 +62,12 @@ module TagCategory
       "char" => "character",
       "gen"  => "general",
       "meta" => "meta",
+      "cir"  => "circle",
     }
   end
 
   def categories
-    %w[general character copyright artist meta]
+    %w[general character copyright artist meta circle]
   end
 
   def category_ids
@@ -70,17 +75,17 @@ module TagCategory
   end
 
   def short_name_list
-    %w[art copy char gen meta]
+    %w[art copy char gen meta cir]
   end
 
   # The order of tags on the post page tag list.
   def split_header_list
-    %w[artist copyright character general meta]
+    %w[artist circle copyright character general meta]
   end
 
   # The order of tags inside the tag edit box, and on the comments page.
   def categorized_list
-    %w[artist copyright character meta general]
+    %w[artist circle copyright character meta general]
   end
 
   # Which tag categories to show in the related tags box for a tag of the given type.
@@ -90,7 +95,8 @@ module TagCategory
       ARTIST    => [COPYRIGHT, CHARACTER, GENERAL],
       CHARACTER => [COPYRIGHT, CHARACTER, GENERAL],
       COPYRIGHT => [COPYRIGHT, CHARACTER, GENERAL],
-      META      => [META, GENERAL]
+      META      => [META, GENERAL],
+      CIRCLE    => [COPYRIGHT, CHARACTER, GENERAL],
     }
   end
 
@@ -102,6 +108,7 @@ module TagCategory
       CHARACTER => [COPYRIGHT, CHARACTER, GENERAL, META],
       COPYRIGHT => [COPYRIGHT, CHARACTER, GENERAL, META],
       META      => [COPYRIGHT, CHARACTER, META, GENERAL],
+      CIRCLE    => [COPYRIGHT, CHARACTER, META, GENERAL],
     }
   end
 
