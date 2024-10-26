@@ -114,7 +114,7 @@ services:
   # https://github.com/danbooru/iqdb
   # https://hub.docker.com/repository/docker/evazion/iqdb
   iqdb:
-    image: evazion/iqdb
+    image: bobbobs/iqdb-rs:x86_64-v4-mt
     volumes:
       - "iqdb-data:/iqdb/data"
     command: ["http", "0.0.0.0", "5588", "/iqdb/data/iqdb.sqlite"]
