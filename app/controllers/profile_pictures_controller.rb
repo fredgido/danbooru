@@ -40,6 +40,7 @@ class ProfilePicturesController < ApplicationController
       end
 
       @profile_picture = authorize ProfilePicture.new(user_id: CurrentUser.id, **permitted_attributes(ProfilePicture))
+      @profile_picture.crop_image!
       if @profile_picture.save
         flash[:notice] = "Avatar was set"
       else
@@ -66,7 +67,7 @@ class ProfilePicturesController < ApplicationController
 
   def destroy
     @profile_picture = authorize ProfilePicture.find(params[:id])
-    @profile_picture.destroy!
+    @profile_picture.delete!
     respond_with(@profile_picture)
   end
 end

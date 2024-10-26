@@ -1,6 +1,13 @@
 <div id="c-profile-pictures">
   <div id="a-index">
-  <h1>Profile pictures</h1>
+  <h1>Profile Pictures</h1>
+
+  <%= search_form_for(profile_pictures_path) do |f| %>
+    <%= f.input :user_name, input_html: { value: params[:search][:user_name], "data-autocomplete": "user" } %>
+    <%= f.input :is_deleted, label: "Deleted?", as: :select, include_blank: true, selected: params[:search][:is_deleted] %>
+
+    <%= f.submit "Search" %>
+  <% end %>
 
   <div id="profile_pictures">
     <%= table_for @profile_pictures, class: "striped autofit" do |t| %>
@@ -14,6 +21,14 @@
 
       <% t.column :created_at do |profile_picture| %>
         <%= time_ago_in_words_tagged(profile_picture.created_at) %>
+      <% end %>
+
+      <% t.column column: :control do |profile_picture| %>
+        <% if profile_picture.is_deleted? %>
+          Deleted
+        <% elsif policy(profile_picture).destroy? %>
+          <%= link_to "Delete", profile_picture_path(profile_picture), method: "delete", remote: true, "data-confirm": "Are you sure you want to delete this profile picture?" %>
+        <% end %>
       <% end %>
     <% end %>
   </div>

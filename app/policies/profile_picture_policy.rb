@@ -12,7 +12,7 @@ class ProfilePicturePolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.user == user || user.is_admin?
+    record.user == user || user.is_moderator?
   end
 
   def permitted_attributes
