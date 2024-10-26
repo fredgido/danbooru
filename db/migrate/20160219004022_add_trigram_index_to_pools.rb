@@ -1,6 +1,6 @@
 class AddTrigramIndexToPools < ActiveRecord::Migration[4.2]
   def up
-    execute "create extension pg_trgm"
+    execute "create extension if not exists pg_trgm"
     execute "create index index_pools_on_name_trgm on pools using gin (name gin_trgm_ops)"
   end
 
