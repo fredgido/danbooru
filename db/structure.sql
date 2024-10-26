@@ -1735,7 +1735,8 @@ CREATE TABLE public.profile_pictures (
     height integer NOT NULL,
     width integer NOT NULL,
     top integer NOT NULL,
-    "left" integer NOT NULL
+    "left" integer NOT NULL,
+    is_deleted boolean DEFAULT false NOT NULL
 );
 
 
@@ -6902,6 +6903,7 @@ ALTER TABLE ONLY public.profile_pictures
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241026212428'),
 ('20241012193130'),
 ('20240926020203'),
 ('20240607200251'),
