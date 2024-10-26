@@ -90,7 +90,7 @@ class IqdbClient
   # @param post [Post] the post to add
   def add_post(post)
     return unless enabled? && post.has_preview?
-    preview_file = post.file(:"180x180")
+    preview_file = post.file(:"360x360")
     add(post.id, preview_file)
   end
 
