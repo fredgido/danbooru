@@ -165,7 +165,7 @@ services:
       - ${DANBOORU_DIR:-./}/public:/danbooru/public
 
   autotagger:
-    image: ghcr.io/danbooru/autotagger:latest
+    image: ghcr.io/fredgido/autotagger:latest
 
   webpack:
     <<: *base-template

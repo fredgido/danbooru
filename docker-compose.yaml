@@ -204,7 +204,7 @@ services:
 
 
   autotagger:
-    image: ghcr.io/danbooru/autotagger:latest
+    image: ghcr.io/fredgido/autotagger:latest
 
 configs:
   danbooru_local_config:
