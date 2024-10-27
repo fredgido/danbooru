@@ -1524,7 +1524,8 @@ CREATE TABLE public.posts (
     last_commented_at timestamp without time zone,
     has_active_children boolean DEFAULT false,
     bit_flags bigint DEFAULT 0 NOT NULL,
-    tag_count_meta integer DEFAULT 0 NOT NULL
+    tag_count_meta integer DEFAULT 0 NOT NULL,
+    tag_count_circle integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1676,10 +1677,10 @@ CREATE TABLE public.post_votes (
     post_id integer NOT NULL,
     user_id integer NOT NULL,
     score integer NOT NULL,
-    legacy_score smallint NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    is_deleted boolean DEFAULT false
+    is_deleted boolean DEFAULT false,
+    legacy_score smallint
 );
 
 
@@ -6907,10 +6908,12 @@ ALTER TABLE ONLY public.profile_pictures
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241026212429'),
+('20241026212428'),
+('20241018065316'),
 ('20241018065315'),
 ('20241018035234'),
 ('20241018034758'),
-('20241026212428'),
 ('20241012193130'),
 ('20240926020203'),
 ('20240607200251'),
