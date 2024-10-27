@@ -1676,6 +1676,7 @@ CREATE TABLE public.post_votes (
     post_id integer NOT NULL,
     user_id integer NOT NULL,
     score integer NOT NULL,
+    legacy_score smallint NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     is_deleted boolean DEFAULT false
