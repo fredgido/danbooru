@@ -91,7 +91,7 @@ class RelatedTagCalculator
   # @param search_count [Integer] The total number of posts in the search
   # @return [Array<RelatedTag>] The set of related tags, ordered by most frequent first.
   def frequent_tags_for_post_relation(posts, search_count)
-    return [] if search_count.nil?
+    return [] if search_count.to_i == 0
 
     tag_counts = Post.from(posts).with_unflattened_tags.group("tag").select("tag, COUNT(*) AS overlap_count")
 
