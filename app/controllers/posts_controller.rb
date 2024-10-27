@@ -140,9 +140,14 @@ class PostsController < ApplicationController
   def advanced_search
     return unless request.post?
 
-    search_params = params["search"].slice("q", "size_type", "width", "height", "order", "rating").permit!.to_h
+    search_params = params["search"].slice("q", "exclude", "size_type", "width", "height", "order", "rating").permit!.to_h
 
     tags = search_params["q"]
+
+    if search_params["exclude"].present?
+      exclude_tags = search_params["exclude"].split.map { |tag| tag.start_with?("-") ? tag : "-#{tag}" }.join(" ")
+      tags = "#{tags} #{exclude_tags}".strip
+    end
 
     if search_params["resolution"].present?
       resolution = case search_params["resolution"].downcase

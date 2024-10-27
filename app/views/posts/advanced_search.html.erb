@@ -4,7 +4,7 @@
 
     <%= simple_form_for(:search, id: "search-form-box", url: advanced_search_posts_path, html: { class: "stacked-hints w-fit" }) do |f| %>
       <%= f.input :q, as: :string, label: "Tags", required: false, hint: "Use * as wildcard", input_html: { "data-autocomplete": "tag-query", "autocapitalize": "none" } %>
-      <%= f.input :exclude, as: :string, label: "Blacklist", required: false, disabled: true, input_html: { value: "Not working yet!" } %>
+      <%= f.input :exclude, as: :string, label: "Blacklist", required: false, hint: "Tags to exclude", input_html: { } %>
       <div>
       <%= render(TabPanelComponent.new do |t| %>
         <% t.panel("Common Resolutions", active: true) do %>
