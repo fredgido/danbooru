@@ -117,7 +117,7 @@ services:
     image: bobbobs/iqdb-rs:x86_64-v4-mt
     volumes:
       - "iqdb-data:/iqdb/data"
-    command: ["http", "0.0.0.0", "5588", "/iqdb/data/iqdb.sqlite"]
+    command: ["--database", "/iqdb/data/iqdb.sqlite"]
 
   redis:
     image: redis
