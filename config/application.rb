@@ -40,8 +40,12 @@ module Danbooru
   # if danbooru_local_config exists then use it as the config, otherwise use danbooru_default_config.
   if defined?(CustomConfiguration)
     self.config = EnvironmentConfiguration.new(CustomConfiguration.new)
+    puts "loaded CustomConfiguration"
+    puts self.config.hosts
   else
     self.config = EnvironmentConfiguration.new(Configuration.new)
+    puts "loaded Configuration"
+    puts self.config.hosts
   end
 
   class Application < Rails::Application
