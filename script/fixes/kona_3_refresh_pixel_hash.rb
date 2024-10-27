@@ -11,6 +11,10 @@ puts asset_id > 0 ? "Processing assets with IDs greater than ##{asset_id}." : "N
 File.open('failed_pixel_hash_files.txt', 'a') do |log_file|
   assets.find_each do |asset|
     begin
+      if asset.variant("720x720").open_file.nil?
+        puts " did not find file for ##{asset.id}"
+        next
+      end
       asset.original.open_file! do |original_file|
         asset.update!(pixel_hash: MediaFile.open(original_file).pixel_hash)
         puts "##{asset.id} media pixel hash regenerated"

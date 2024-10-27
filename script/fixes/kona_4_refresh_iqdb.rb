@@ -9,6 +9,10 @@ puts post_id > 0 ? "Processing posts with IDs greater than ##{post_id}." : "No v
 File.open('failed_iqdb_files.txt', 'a') do |log_file|
   Post.all.where("id > ?", post_id ? post_id : 0).find_each do |post|
     begin
+      if post.asset.variant("720x720").open_file.nil?
+        puts "did not find file for ##{asset.id}"
+        next
+      end
       IqdbClient.new.add_post(post)
       puts "##{post.id} post iqdb regenerated"
     rescue Errno::ENOENT => e
