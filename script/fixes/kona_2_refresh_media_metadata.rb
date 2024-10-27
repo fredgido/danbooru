@@ -23,9 +23,13 @@ MediaAsset.active.where("id > ?", asset_id).find_each do |asset|
       metadata_changes = { added_metadata: (new.to_a - old.to_a).to_h, removed_metadata: (old.to_a - new.to_a).to_h }.compact_blank
       puts ({ id: asset.id, **asset.changes, **metadata_changes }).to_json
 
+      # Set media_metadata's ID to match asset's ID before saving if it doesn't already have an ID
+      asset.media_metadata.id = asset.id if asset.media_metadata.new_record? || asset.media_metadata.id.nil?
+
       asset.post.save! if asset.post&.changed?
       asset.save! if asset.changed?
       asset.media_metadata.save! if asset.media_metadata.changed?
+      # asset.media_metadata.update!(id: asset.id) if asset.media_metadata.id != asset.id
 
       media_file.close
       puts "##{asset.id} media pixel hash regenerated"
@@ -40,3 +44,5 @@ MediaAsset.active.where("id > ?", asset_id).find_each do |asset|
     end
   end
 end
+
+puts "go reset the media_metadata id sequence"
