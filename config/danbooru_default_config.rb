@@ -909,6 +909,11 @@ module Danbooru
     def legacy_password_salt
       "So-I-Heard-You-Like-Mupkids-?"
     end
+
+    def disable_automatic_tags
+      false
+    end
+
     def reactions
       {}
     end
