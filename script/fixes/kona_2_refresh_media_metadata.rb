@@ -12,6 +12,10 @@ MediaAsset.active.where("id > ?", asset_id).find_each do |asset|
     begin
       variant = asset.variant(:original)
       media_file = variant.open_file
+      if asset.variant("720x720").open_file.nil?
+        puts " did not find file for ##{asset.id}"
+        next
+      end
 
 
       asset.file = media_file # Setting `file` updates the metadata if it's different.
@@ -44,5 +48,3 @@ MediaAsset.active.where("id > ?", asset_id).find_each do |asset|
     end
   end
 end
-
-puts "go reset the media_metadata id sequence"
