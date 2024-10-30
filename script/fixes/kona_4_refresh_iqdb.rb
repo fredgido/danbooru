@@ -3,11 +3,13 @@
 require_relative "base"
 
 post_id = ARGV[0].to_i
+descending = ARGV[1] == 'true' # If true, sorts in descending order; otherwise, ascending.
+sort_order = descending ? :desc : :asc
 
 puts post_id > 0 ? "Processing posts with IDs greater than ##{post_id}." : "No valid ID provided. Processing all posts."
 
 File.open('failed_iqdb_files.txt', 'a') do |log_file|
-  Post.all.where("id > ?", post_id ? post_id : 0).find_each do |post|
+  Post.all.where("id > ?", post_id ? post_id : 0).order(id: sort_order).find_each do |post|
     begin
       if post.asset.variant("720x720").open_file.nil?
         puts "did not find file for ##{asset.id}"

@@ -5,10 +5,12 @@ require_relative "base"
 CurrentUser.user = User.system
 
 asset_id = ARGV[0].to_i
+descending = ARGV[1] == 'true' # If true, sorts in descending order; otherwise, ascending.
+sort_order = descending ? :desc : :asc
 
 File.open('failed_media_metadata_files.txt', 'a') do |log_file|
 
-MediaAsset.active.where("id > ?", asset_id).find_each do |asset|
+MediaAsset.active.where("id > ?", asset_id).order(id: sort_order).find_each do |asset|
     begin
       variant = asset.variant(:original)
       media_file = variant.open_file

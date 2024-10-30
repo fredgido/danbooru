@@ -3,8 +3,10 @@
 require_relative "base"
 
 asset_id = ARGV[0].to_i
+descending = ARGV[1] == 'true' # If true, sorts in descending order; otherwise, ascending.
+sort_order = descending ? :desc : :asc
 
-assets = MediaAsset.where(" pixel_hash = '00000000-0000-0000-0000-000000000000'::uuid ")
+assets = MediaAsset.where(" pixel_hash = '00000000-0000-0000-0000-000000000000'::uuid ").order(id: sort_order)
 
 puts asset_id > 0 ? "Processing assets with IDs greater than ##{asset_id}." : "No valid ID provided. Processing all assets."
 

@@ -3,8 +3,10 @@
 require_relative "base"
 
 asset_id = ARGV[0].to_i
+descending = ARGV[1] == 'true' # If true, sorts in descending order; otherwise, ascending.
+sort_order = descending ? :desc : :asc
 
-assets = asset_id > 0 ? MediaAsset.where("id > ?", asset_id) : MediaAsset.all
+assets = asset_id > 0 ? MediaAsset.where("id > ?", asset_id).order(id: sort_order) : MediaAsset.all.order(id: sort_order)
 
 puts asset_id > 0 ? "Processing assets with IDs greater than ##{asset_id}." : "No valid ID provided. Processing all assets."
 
