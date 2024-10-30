@@ -262,7 +262,7 @@ RUN <<EOS
   bin/install
 EOS
 
-COPY --link Gemfile Gemfile.lock ./
+COPY Gemfile Gemfile.lock ./
 RUN <<EOS
   BUNDLE_FROZEN=1 bundle install --no-cache --jobs $(nproc)
 
@@ -307,13 +307,13 @@ EOS
 FROM base AS danbooru-base
 WORKDIR /danbooru
 
-COPY --link --from=build-ffmpeg /usr/local /usr/local
-COPY --link --from=build-exiftool /usr/local /usr/local
-COPY --link --from=build-openresty /usr/local /usr/local
-COPY --link --from=build-vips /usr/local /usr/local
-COPY --link --from=build-ruby /usr/local /usr/local
-COPY --link --from=build-gems $GEM_HOME $GEM_HOME
-COPY --link --from=build-assets /danbooru/public/packs /danbooru/public/packs
+COPY --from=build-ffmpeg /usr/local /usr/local
+COPY --from=build-exiftool /usr/local /usr/local
+COPY --from=build-openresty /usr/local /usr/local
+COPY --from=build-vips /usr/local /usr/local
+COPY --from=build-ruby /usr/local /usr/local
+COPY --from=build-gems $GEM_HOME $GEM_HOME
+COPY --from=build-assets /danbooru/public/packs /danbooru/public/packs
 
 # http://jemalloc.net/jemalloc.3.html#tuning
 ENV LD_PRELOAD=libjemalloc.so.2
@@ -389,10 +389,10 @@ RUN <<EOS
   touch /home/danbooru/.sudo_as_admin_successful
 EOS
 
-COPY --link --from=build-node /usr/local /usr/local
-COPY --link --from=build-assets /danbooru/node_modules /node_modules
-COPY --link --from=production /home/danbooru/bootsnap /home/danbooru/bootsnap
-COPY --link --from=production /danbooru /danbooru
+COPY --from=build-node /usr/local /usr/local
+COPY --from=build-assets /danbooru/node_modules /node_modules
+COPY --from=production /home/danbooru/bootsnap /home/danbooru/bootsnap
+COPY --from=production /danbooru /danbooru
 
 RUN chown danbooru:danbooru /danbooru /node_modules /home/danbooru /home/danbooru/bootsnap /home/danbooru/.sudo_as_admin_successful
 
