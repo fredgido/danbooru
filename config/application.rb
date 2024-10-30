@@ -123,9 +123,8 @@ module Danbooru
     }
 
     config.hosts << canonical_url.host if canonical_url.host.present?
-    config.hosts.concat(Danbooru.config.hosts) if Danbooru.config.hosts
-    config.hosts.concat(Danbooru.config.alternate_domains) if Danbooru.config.alternate_domains
-    config.hosts.concat(Danbooru.config.safe_mode_hostnames) if Danbooru.config.safe_mode_hostnames
+    config.hosts.concat(Danbooru.config.alternate_domains || []) if Danbooru.config.respond_to?(:alternate_domains)
+    config.hosts.concat(Danbooru.config.safe_mode_hostnames || []) if Danbooru.config.respond_to?(:safe_mode_hostnames)
     config.hosts.uniq!
 
   end
